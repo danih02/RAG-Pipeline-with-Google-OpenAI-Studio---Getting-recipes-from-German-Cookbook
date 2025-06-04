@@ -1,6 +1,6 @@
 # RAG Pipeline with Google OpenAI Studio: Extracting Recipes from a German Cookbook
 
-This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline, orchestrated by an intelligent agent built with [LangChain](https://github.com/langchain-ai/langchain) and powered by Google's Gemini LLM (via OpenAI Studio). The system extracts and queries recipes from the German cookbook **"Das gute Essen – Mit 500 Rezepten für jeden Tag"**.
+This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline, orchestrated by an intelligent agent built with [LangChain](https://github.com/langchain-ai/langchain) and powered by Google's Gemini LLM (via OpenAI Studio). The system extracts and queries recipes from the German cookbook **"Das gute Essen – Mit 500 Rezepten für jeden Tag"**
 
 ## Table of Contents
 

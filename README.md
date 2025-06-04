@@ -1,10 +1,11 @@
 # RAG Pipeline with Google OpenAI Studio: Extracting Recipes from a German Cookbook
 
-This project demonstrates how to use a Retrieval-Augmented Generation (RAG) pipeline, powered by [LangChain](https://github.com/langchain-ai/langchain) and Google's Gemini LLM (via OpenAI Studio), to extract and query recipes from the German cookbook **"Das gute Essen – Mit 500 Rezepten für jeden Tag"**.
+This project demonstrates a Retrieval-Augmented Generation (RAG) pipeline, orchestrated by an intelligent agent built with [LangChain](https://github.com/langchain-ai/langchain) and powered by Google's Gemini LLM (via OpenAI Studio). The system extracts and queries recipes from the German cookbook **"Das gute Essen – Mit 500 Rezepten für jeden Tag"**.
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Agent & RAG Architecture](#agent--rag-architecture)
 - [Features](#features)
 - [Installation](#installation)
 - [How It Works](#how-it-works)
@@ -17,7 +18,19 @@ This project demonstrates how to use a Retrieval-Augmented Generation (RAG) pipe
 
 ## Overview
 
-The goal of this project is to enable users to ask questions about recipes in a scanned German cookbook and receive structured, context-aware answers. The pipeline combines classical keyword-based retrieval (BM25), semantic search (FAISS with sentence embeddings), and a powerful LLM to extract and summarize recipes—even when multiple recipes appear on a single page.
+The goal of this project is to enable users to ask questions about recipes in a scanned German cookbook and receive structured, context-aware answers. The pipeline combines classical keyword-based retrieval (BM25), semantic search (FAISS with sentence embeddings), and a powerful LLM agent to extract and summarize recipes—even when multiple recipes appear on a single page.
+
+## Agent & RAG Architecture
+
+At the heart of this project is an **agent** that coordinates the RAG workflow:
+
+- **Hybrid Retrieval:** The agent uses both BM25 (keyword search) and FAISS (semantic search) to retrieve the most relevant recipe contexts from the cookbook.
+- **Context Assembly:** Retrieved passages are merged and filtered for relevance.
+- **Prompt Engineering:** The agent constructs a prompt that strictly instructs the LLM to answer only using the provided context, and always in German.
+- **LLM Orchestration:** The agent invokes Gemini 1.5 Pro via Google OpenAI Studio, ensuring answers are grounded in the cookbook and not hallucinated.
+- **Relevance Filtering:** The agent checks if the context is sufficient before generating an answer, and can abstain if the context is not relevant.
+
+This agent-driven RAG setup ensures robust, context-aware, and trustworthy answers to user queries about the cookbook.
 
 ## Features
 
@@ -25,7 +38,7 @@ The goal of this project is to enable users to ask questions about recipes in a 
 - **Text Block Extraction:** Extracts text blocks with position and font size for logical reading order.
 - **Recipe Segmentation:** Splits pages into individual recipes using heuristics and text size.
 - **Hybrid Retrieval:** Combines BM25 and FAISS for robust document retrieval.
-- **RAG Pipeline:** Uses LangChain to provide context-aware answers, strictly based on the cookbook content.
+- **Agent-Orchestrated RAG Pipeline:** An agent manages retrieval, context assembly, and LLM prompting for accurate, context-based answers.
 - **LLM Integration:** Utilizes Gemini 1.5 Pro via Google OpenAI Studio for natural language understanding and generation.
 - **Relevance Filtering:** Ensures answers are only given when the context is relevant.
 
@@ -52,9 +65,9 @@ The goal of this project is to enable users to ask questions about recipes in a 
 3. **Recipe Detection:** Headers are identified by font size, and recipes are segmented using custom tokens.
 4. **Recipe Extraction:** Pages with multiple recipes are split into individual recipes.
 5. **Vector Database:** All recipes are embedded and stored in a FAISS vector database.
-6. **Hybrid Retrieval:** BM25 and FAISS are combined for robust retrieval.
-7. **Prompting:** A structured prompt ensures the LLM only uses provided context and answers in German.
-8. **Relevance Filtering:** The LLM judges if the retrieved context is relevant before answering.
+6. **Hybrid Retrieval:** The agent combines BM25 and FAISS to retrieve relevant recipes.
+7. **Prompting:** The agent crafts a structured prompt so the LLM only uses provided context and answers in German.
+8. **Relevance Filtering:** The agent ensures the LLM only answers if the retrieved context is relevant.
 
 ## Usage Examples
 
